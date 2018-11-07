@@ -8,6 +8,14 @@ import * as React from 'react';
 import Emoji from '../Emoji/Emoji';
 import styles from './Markdown.css';
 
+function linkify(url: string): string {
+  if (url.search(/^http[s]?:\/\//) === -1) {
+    return `http://${url}`;
+  }
+
+  return url;
+}
+
 export function renderText(
   tokens: TextToken[],
   emojiSize?: number = 16,
@@ -21,13 +29,14 @@ export function renderText(
     switch (highlight) {
       case 'link': {
         const url = (options && (options.url || options.href)) || content;
+        const link = linkify(String(url));
         const target = (options && options.target) || '_blank';
 
         result.push(
           <a
             key={index}
             className={styles.link}
-            href={url}
+            href={link}
             target={target}
             rel={target === '_blank' ? 'noopener noreferrer' : undefined}
           >
