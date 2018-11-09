@@ -8,7 +8,7 @@ import * as React from 'react';
 import Emoji from '../Emoji/Emoji';
 import styles from './Markdown.css';
 
-function linkify(url: string): string {
+function normalizeUrl(url: string): string {
   if (url.search(/^http[s]?:\/\//) === -1) {
     return `http://${url}`;
   }
@@ -29,7 +29,7 @@ export function renderText(
     switch (highlight) {
       case 'link': {
         const url = (options && (options.url || options.href)) || content;
-        const link = linkify(String(url));
+        const link = normalizeUrl(String(url));
         const target = (options && options.target) || '_blank';
 
         result.push(
