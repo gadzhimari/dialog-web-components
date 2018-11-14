@@ -77,9 +77,7 @@ export function renderText(
                 string[0] === ' ' &&
                 string[1] === ' '
               ) {
-                return string
-                  .split('')
-                  .map((char, key) => ['\u00A0', <wbr key={key} />]);
+                return string.split('').map(() => ['\u00A0', '\u2063']);
               }
 
               return string;
