@@ -24,12 +24,6 @@
   --dropdown-transition-duration: var(--default-transition-duration);
 }
 
-:global {
-  & .tether-element {
-    z-index: var(--z-index-dropdown);
-  }
-}
-
 /* Reset */
 .container,
 .item,

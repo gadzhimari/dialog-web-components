@@ -14,12 +14,6 @@
   --tooltip-transition-duration: 100ms;
 }
 
-:global {
-  & .tether-element {
-    pointer-events: none;
-  }
-}
-
 /* Reset */
 .tooltip {
   all: initial;
@@ -28,6 +22,11 @@
 /* Styles */
 .wrapper {
   display: inline-block;
+}
+
+.tetherElement {
+  z-index: var(--tooltip-z-index);
+  pointer-events: none;
 }
 
 .tooltip {
@@ -45,7 +44,6 @@
   font-size: var(--tooltip-font-size);
   line-height: 20px;
   color: var(--tooltip-color);
-  pointer-events: none;
   @mixin no-select;
 
   & strong {
