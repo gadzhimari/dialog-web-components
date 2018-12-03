@@ -7,7 +7,7 @@
 :root {
   --tooltip-font-family: var(--default-font-family);
   --tooltip-font-size: var(--default-font-size-small);
-  --tooltip-background-color: color(#000 alpha(70%));
+  --tooltip-background-color: color-mod(#000 alpha(70%));
   --tooltip-color: #fff;
   --tooltip-offset: 3px;
   --tooltip-z-index: var(--z-index-tooltip);
@@ -46,7 +46,7 @@
   line-height: 20px;
   color: var(--tooltip-color);
   pointer-events: none;
-  @apply --no-select;
+  @mixin no-select;
 
   & strong {
     font-weight: 500;

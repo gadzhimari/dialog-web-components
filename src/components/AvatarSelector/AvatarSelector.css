@@ -7,9 +7,13 @@
 :root {
   --avatar-selector-transitio-duration: var(--default-transition-duration);
   --avatar-selector-camera-icon-color: var(--color-primary);
-  --avatar-selector-camera-icon-color-hover: color(var(--avatar-selector-camera-icon-color) alpha(90%));
+  --avatar-selector-camera-icon-color-hover: color-mod(
+    var(--avatar-selector-camera-icon-color) alpha(90%)
+  );
   --avatar-selector-remove-icon-color: var(--color-danger);
-  --avatar-selector-remove-icon-color-hover: color(var(--avatar-selector-remove-icon-color) alpha(90%));
+  --avatar-selector-remove-icon-color-hover: color-mod(
+    var(--avatar-selector-remove-icon-color) alpha(90%)
+  );
 }
 
 /* Reset */

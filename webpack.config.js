@@ -15,15 +15,25 @@ const whitelist = [
   resolve('node_modules/@dlghq/react-l10n'),
   resolve('node_modules/@dlghq/dialog-types'),
   resolve('node_modules/@dlghq/dialog-utils'),
-  resolve('node_modules/@dlghq/country-codes')
+  resolve('node_modules/@dlghq/country-codes'),
 ];
 
-module.exports = {
-  resolve: {
-    alias: {
-      'rsg-components/Wrapper': resolve('src/styleguide/Wrapper.js')
-    }
+const globalStyles = [
+  resolve('src/styles/global.css'),
+  resolve('src/components/MessageMediaInteractive/example/CodeMirror.css'),
+  resolve('src/styleguide/styles.css'),
+];
+
+const postcssOptions = {
+  env: {
+    features: {
+      'all-property': false,
+    },
   },
+};
+
+module.exports = {
+  mode: 'development',
   module: {
     rules: [
       {
@@ -35,15 +45,15 @@ module.exports = {
           cacheDirectory: true,
           presets: [
             [
-              '@dlghq/dialog',
+              '@dlghq/babel-preset-dialog',
               {
                 modules: false,
                 runtime: false,
-                development: true
-              }
-            ]
-          ]
-        }
+                development: true,
+              },
+            ],
+          ],
+        },
       },
       {
         test: /\.css$/,
@@ -53,30 +63,24 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: false,
-              importLoaders: 1
-            }
+              importLoaders: 1,
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               plugins() {
-                return require('@dlghq/postcss-dialog')({ initial: false });
-              }
-            }
-          }
+                return require('@dlghq/postcss-dialog')(postcssOptions);
+              },
+            },
+          },
         ],
-        include: [
-          resolve('src/styles/global.css'),
-          resolve('src/components/MessageMediaInteractive/example/CodeMirror.css')
-        ]
+        include: globalStyles,
       },
       {
         test: /\.css$/,
         include: whitelist,
-        exclude: [
-          resolve('src/styles/global.css'),
-          resolve('src/components/MessageMediaInteractive/example/CodeMirror.css')
-        ],
+        exclude: globalStyles,
         use: [
           'style-loader',
           {
@@ -84,45 +88,39 @@ module.exports = {
             options: {
               modules: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]'
-            }
+              localIdentName: '[name]__[local]',
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               plugins() {
-                return require('@dlghq/postcss-dialog')();
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.json$/,
-        include: [...whitelist, path.join(__dirname, 'node_modules/entities')],
-        use: ['json-loader']
+                return require('@dlghq/postcss-dialog')(postcssOptions);
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.yml$/,
         include: whitelist,
-        use: ['yml-loader']
+        use: ['yml-loader'],
       },
       {
         test: /\.(jpg|png|svg|gif)$/,
-        include: /./,
         exclude: resolve('src/components/Icon/svg'),
-        use: ['file-loader']
+        use: ['file-loader'],
       },
       {
         test: /\.(svg)$/,
         include: resolve('src/components/Icon/svg'),
-        loader: 'svg-sprite-loader'
+        use: ['svg-sprite-loader'],
       },
       {
         test: /\.txt$/,
         include: whitelist,
-        use: ['raw-loader']
-      }
-    ]
-  }
+        use: ['raw-loader'],
+      },
+    ],
+  },
 };
